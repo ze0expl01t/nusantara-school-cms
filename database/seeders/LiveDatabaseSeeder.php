@@ -8101,7 +8101,7 @@ class LiveDatabaseSeeder extends Seeder
   0 => 
   array (
     'id' => 1,
-    'email' => 'rinaminamrina@gmail.com',
+    'email' => 'admin1@smkmuh1blora.sch.id',
     'name' => NULL,
     'status' => 'pending',
     'token' => 'VGSEtPfCIJpMtVQakS7sEybrww7wtvbSSLflaZgCWWzbZpYDUw6SYArx8o6pX5XL',
@@ -10376,7 +10376,7 @@ class LiveDatabaseSeeder extends Seeder
     'user_id' => 1,
     'created_at' => '2026-09-26 12:26:46',
     'updated_at' => '2026-09-26 12:26:46',
-    'payload' => '{"slug":{"en":"eka-kusuma"},"description":{"en":null},"meta_title":{"en":null},"meta_description":{"en":null},"title":{"en":"Sukiran"},"job_title":"Kepala Sekola","department":"Umum","is_leadership":true,"email":"sukiran@smkmuh1blora.sch.id","phone":"085892063082","facebook_url":"https:\\/\\/smkmuh1blora.sch.id\\/","instagram_url":"https:\\/\\/smkmuh1blora.sch.id\\/","linkedin_url":"https:\\/\\/smkmuh1blora.sch.id\\/","twitter_url":"https:\\/\\/smkmuh1blora.sch.id\\/","youtube_url":"https:\\/\\/smkmuh1blora.sch.id\\/","whatsapp_url":"https:\\/\\/smkmuh1blora.sch.id\\/","cmsSaveType":"update","published":true,"public":false,"publish_start_date":null,"publish_end_date":null,"languages":[{"shortlabel":"EN","label":"English","value":"en","disabled":false,"published":true}],"parent_id":0,"medias":{"photo":[{"id":15,"name":"2151737290.jpg","thumbnail":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=60&fit=max&dpr=1&h=256","original":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg","medium":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=80&fit=max&h=430","width":1130,"height":1500,"tags":[],"deleteUrl":null,"updateUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/single-update","updateBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-update","deleteBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-delete","metadatas":{"default":{"caption":null,"altText":"2151737290","video":null},"custom":{"caption":null,"altText":null,"video":null}},"disabled":false,"crops":{"default":{"name":"default","x":0,"y":188,"width":1130,"height":1130},"portrait":{"name":"portrait","x":0,"y":0,"width":1124,"height":1500}}}]},"browsers":[],"blocks":[],"repeaters":[]}',
+    'payload' => '{"slug":{"en":"eka-kusuma"},"description":{"en":null},"meta_title":{"en":null},"meta_description":{"en":null},"title":{"en":"Sukiran"},"job_title":"Kepala Sekola","department":"Umum","is_leadership":true,"email":"admin2@smkmuh1blora.sch.id","phone":"085892063082","facebook_url":"https:\\/\\/smkmuh1blora.sch.id\\/","instagram_url":"https:\\/\\/smkmuh1blora.sch.id\\/","linkedin_url":"https:\\/\\/smkmuh1blora.sch.id\\/","twitter_url":"https:\\/\\/smkmuh1blora.sch.id\\/","youtube_url":"https:\\/\\/smkmuh1blora.sch.id\\/","whatsapp_url":"https:\\/\\/smkmuh1blora.sch.id\\/","cmsSaveType":"update","published":true,"public":false,"publish_start_date":null,"publish_end_date":null,"languages":[{"shortlabel":"EN","label":"English","value":"en","disabled":false,"published":true}],"parent_id":0,"medias":{"photo":[{"id":15,"name":"2151737290.jpg","thumbnail":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=60&fit=max&dpr=1&h=256","original":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg","medium":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=80&fit=max&h=430","width":1130,"height":1500,"tags":[],"deleteUrl":null,"updateUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/single-update","updateBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-update","deleteBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-delete","metadatas":{"default":{"caption":null,"altText":"2151737290","video":null},"custom":{"caption":null,"altText":null,"video":null}},"disabled":false,"crops":{"default":{"name":"default","x":0,"y":188,"width":1130,"height":1130},"portrait":{"name":"portrait","x":0,"y":0,"width":1124,"height":1500}}}]},"browsers":[],"blocks":[],"repeaters":[]}',
   ),
   2 => 
   array (
@@ -10385,7 +10385,7 @@ class LiveDatabaseSeeder extends Seeder
     'user_id' => 1,
     'created_at' => '2026-09-26 12:40:11',
     'updated_at' => '2026-09-26 12:40:11',
-    'payload' => '{"title":{"en":"Sukiran"},"slug":{"en":"eka-kusuma"},"job_title":"Kepala Sekola","department":"Umum","is_leadership":true,"email":"sukiran@smkmuh1blora.sch.id","phone":"085892063082","facebook_url":"https:\\/\\/smkmuh1blora.sch.id\\/","instagram_url":"https:\\/\\/smkmuh1blora.sch.id\\/","linkedin_url":"https:\\/\\/smkmuh1blora.sch.id\\/","twitter_url":"https:\\/\\/smkmuh1blora.sch.id\\/","youtube_url":"https:\\/\\/smkmuh1blora.sch.id\\/","whatsapp_url":"https:\\/\\/smkmuh1blora.sch.id\\/","meta_title":{"en":null},"meta_description":{"en":null},"description":{"en":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\\/p>"},"cmsSaveType":"update","published":true,"public":false,"publish_start_date":null,"publish_end_date":null,"languages":[{"shortlabel":"EN","label":"English","value":"en","disabled":false,"published":true}],"parent_id":0,"medias":{"photo":[{"id":15,"name":"2151737290.jpg","thumbnail":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=60&fit=max&dpr=1&h=256","original":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg","medium":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=80&fit=max&h=430","width":1130,"height":1500,"tags":[],"deleteUrl":null,"updateUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/single-update","updateBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-update","deleteBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-delete","metadatas":{"default":{"caption":null,"altText":"2151737290","video":null},"custom":{"caption":null,"altText":null,"video":null}},"pivot_id":233,"crops":{"default":{"pivot_id":233,"name":"default","width":1130,"height":1130,"x":0,"y":188},"portrait":{"pivot_id":234,"name":"portrait","width":1124,"height":1500,"x":0,"y":0}}}]},"browsers":[],"blocks":[],"repeaters":[]}',
+    'payload' => '{"title":{"en":"Sukiran"},"slug":{"en":"eka-kusuma"},"job_title":"Kepala Sekola","department":"Umum","is_leadership":true,"email":"admin2@smkmuh1blora.sch.id","phone":"085892063082","facebook_url":"https:\\/\\/smkmuh1blora.sch.id\\/","instagram_url":"https:\\/\\/smkmuh1blora.sch.id\\/","linkedin_url":"https:\\/\\/smkmuh1blora.sch.id\\/","twitter_url":"https:\\/\\/smkmuh1blora.sch.id\\/","youtube_url":"https:\\/\\/smkmuh1blora.sch.id\\/","whatsapp_url":"https:\\/\\/smkmuh1blora.sch.id\\/","meta_title":{"en":null},"meta_description":{"en":null},"description":{"en":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\\/p>"},"cmsSaveType":"update","published":true,"public":false,"publish_start_date":null,"publish_end_date":null,"languages":[{"shortlabel":"EN","label":"English","value":"en","disabled":false,"published":true}],"parent_id":0,"medias":{"photo":[{"id":15,"name":"2151737290.jpg","thumbnail":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=60&fit=max&dpr=1&h=256","original":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg","medium":"https:\\/\\/smkmuh1blora.sch.id\\/img\\/b72292aa-84c0-45e6-99bd-d65c283596bb\\/2151737290.jpg?fm=jpg&q=80&fit=max&h=430","width":1130,"height":1500,"tags":[],"deleteUrl":null,"updateUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/single-update","updateBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-update","deleteBulkUrl":"https:\\/\\/smkmuh1blora.sch.id\\/panel-maintenance\\/media-library\\/medias\\/bulk-delete","metadatas":{"default":{"caption":null,"altText":"2151737290","video":null},"custom":{"caption":null,"altText":null,"video":null}},"pivot_id":233,"crops":{"default":{"pivot_id":233,"name":"default","width":1130,"height":1130,"x":0,"y":188},"portrait":{"pivot_id":234,"name":"portrait","width":1124,"height":1500,"x":0,"y":0}}}]},"browsers":[],"blocks":[],"repeaters":[]}',
   ),
   3 => 
   array (
@@ -10624,7 +10624,7 @@ class LiveDatabaseSeeder extends Seeder
     'position' => 1,
     'job_title' => 'Kepala Sekola',
     'department' => 'Umum',
-    'email' => 'sukiran@smkmuh1blora.sch.id',
+    'email' => 'admin2@smkmuh1blora.sch.id',
     'phone' => '085892063082',
     'facebook_url' => 'https://smkmuh1blora.sch.id/',
     'instagram_url' => 'https://smkmuh1blora.sch.id/',
@@ -10775,7 +10775,7 @@ class LiveDatabaseSeeder extends Seeder
     'blockable_id' => 2,
     'blockable_type' => 'A17\\Twill\\Models\\AppSetting',
     'position' => 1,
-    'content' => '{"maintenance_message":{"en":"Kami sedang melakukan pemeliharaan sistem untuk meningkatkan layanan. Mohon maaf atas ketidaknyamanannya."},"maintenance_contact_email":"arkanintermedia@gmail.com","maintenance_title":{"en":"Sedang Dalam Perbaikan"},"maintenance_eta":{"en":"Kembali online dalam 7 hari kerja."},"maintenance_enabled":false}',
+    'content' => '{"maintenance_message":{"en":"Kami sedang melakukan pemeliharaan sistem untuk meningkatkan layanan. Mohon maaf atas ketidaknyamanannya."},"maintenance_contact_email":"admin4@smkmuh1blora.sch.id","maintenance_title":{"en":"Sedang Dalam Perbaikan"},"maintenance_eta":{"en":"Kembali online dalam 7 hari kerja."},"maintenance_enabled":false}',
     'type' => 'appSettings.maintenance.maintenance',
     'child_key' => NULL,
     'parent_id' => NULL,
@@ -10799,7 +10799,7 @@ class LiveDatabaseSeeder extends Seeder
     'blockable_id' => 1,
     'blockable_type' => 'A17\\Twill\\Models\\AppSetting',
     'position' => 1,
-    'content' => '{"notify_on_failure":true,"notify_on_success":true,"notify_on_unhealthy":true,"email_to":"arkanintermedia@gmail.com"}',
+    'content' => '{"notify_on_failure":true,"notify_on_success":true,"notify_on_unhealthy":true,"email_to":"admin4@smkmuh1blora.sch.id"}',
     'type' => 'appSettings.backup-settings.notifications',
     'child_key' => NULL,
     'parent_id' => NULL,
@@ -14561,7 +14561,7 @@ class LiveDatabaseSeeder extends Seeder
     'updated_at' => '2026-11-16 12:23:40',
     'published' => 1,
     'name' => 'Admin',
-    'email' => 'arkanintermedia@gmail.com',
+    'email' => 'admin4@smkmuh1blora.sch.id',
     'password' => '$2y$12$A4m3ujblP6w4TBZT5CHoauRX7NyEKMq1MIbk.m/wOzCi9bVW7HevO',
     'role' => 'SUPERADMIN',
     'title' => NULL,
@@ -14580,7 +14580,7 @@ class LiveDatabaseSeeder extends Seeder
     'updated_at' => '2026-11-05 06:02:51',
     'published' => 1,
     'name' => 'oki',
-    'email' => 'oki@smkmuh1blora.sch.id',
+    'email' => 'admin3@smkmuh1blora.sch.id',
     'password' => '$2y$12$A4m3ujblP6w4TBZT5CHoauRX7NyEKMq1MIbk.m/wOzCi9bVW7HevO',
     'role' => 'ADMIN',
     'title' => NULL,
