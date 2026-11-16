@@ -6,11 +6,8 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Kosong — belum ada seeder
+        $this->call(LiveDatabaseSeeder::class);
     }
 }

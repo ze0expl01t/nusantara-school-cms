@@ -22,7 +22,7 @@ Portal informasi dan manajemen konten sekolah berbasis **Laravel**, **Twill CMS*
    Sesuaikan `APP_URL`, `ADMIN_APP_URL`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di file `.env`.
 4. **Migrasi Database & Buat Akun Admin Twill:**
    ```bash
-   php artisan migrate
+   php artisan migrate:fresh --seed
    php artisan twill:superadmin
    ```
 
