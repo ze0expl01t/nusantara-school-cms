@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ===== Font Family ===== */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ===== Alpine cloak ===== */
+[x-cloak] {
+    display: none !important;
+}
+
+/* ===== Custom scrollbar ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+    background: #a7f3d0;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+}
+
+/* ===== Background grid pattern ===== */
+.bg-grid-pattern {
+    background-size: 44px 44px;
+    background-image:
+        linear-gradient(to right, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+}
+
+/* ===== Animation: border glow ===== */
+@keyframes borderGlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.animate-glow {
+    background-size: 200% 200%;
+    animation: borderGlow 4s ease infinite;
+}
+
+/* ===== Animation: loading bar ===== */
+@keyframes indeterminate {
+    0%   { transform: translateX(-100%); width: 30%; }
+    50%  { transform: translateX(100%);  width: 60%; }
+    100% { transform: translateX(300%);  width: 30%; }
+}
+.loading-bar-animation {
+    animation: indeterminate 1.5s infinite linear;
+}
+
+/* ===== Animation: marquee ===== */
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    .loading-bar-animation,
+    .animate-glow {
+        animation: none !important;
+    }
+    .scroll-smooth {
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,120 @@
+# ─── Environment & Secrets ───────────────────────────────
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# ─── Laravel ─────────────────────────────────────────────
+/vendor
+/node_modules
+/public/storage
+/public/hot
+/public/build
+/storage/*.key
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*
+!.gitkeep
+
+# ─── Build & Coverage ────────────────────────────────────
+coverage/
+.phpunit.result.cache
+.phpunit.cache
+
+# ─── IDE & OS ────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ─── Composer ────────────────────────────────────────────
+composer.phar
+/auth.json
+
+# ─── Environment Backups ─────────────────────────────────
+.env.backup
+.env.backup.*
+.env.production
+.env.production.*
+.env.staging
+.env.staging.*
+.env.local
+.env.local.*
+.env.*.bak
+*.env.bak
+
+# ─── Backup & Temp Files ─────────────────────────────────
+*.bak
+*.bak.*
+*.backup
+*.backup.*
+*.old
+*.orig
+*~
+
+# ─── Storage Backups (Spatie Backup) ─────────────────────
+/storage/backups/*
+/storage/app/backups/*
+
+# ─── Redis Dump (kalau ada di project) ───────────────────
+dump.rdb
+appendonly.aof
+appendonlydir/
+
+# ─── Twill Manifest Cache ────────────────────────────────
+/storage/framework/cache/twill-*
+
+# ═══ BACKUPS (jangan pernah di-track) ═══
+storage/backups/
+storage/app/backups/
+*.zip
+*.tar.gz
+
+# ═══ SCRIPT LOKAL ═══
+scripts/
+*.bak
+*.bak2
+*.bak.*
+/scripts/__pycache__/
+node_modules/
+bootstrap/cache/*.php
+*.bak-*
+
+# Backups
+storage/backups/
+*.zip
+*.tar.gz
+*.sql
+*.sql.gz
+
+# Dependencies
+node_modules/
+vendor/
+
+# Laravel
+storage/logs/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+bootstrap/cache/
+
+# Environment
+.env
+.env.*
+
+# Build
+public/build/
+public/hot
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

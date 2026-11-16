@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block admin area
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+
+Sitemap: https://hse.smkmuh1blora.sch.id/sitemap.xml

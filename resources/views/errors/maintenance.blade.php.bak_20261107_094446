@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{{ $title ?? 'Maintenance' }} | {{ config('app.name') }}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @keyframes spin-slow { to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: spin-slow 3s linear infinite; }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-200 antialiased overflow-hidden">
+
+    {{-- Background --}}
+    <div class="fixed inset-0 z-0">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-emerald-500/20 blur-[140px] rounded-full animate-pulse-glow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-teal-500/20 blur-[140px] rounded-full animate-pulse-glow" style="animation-delay: 1.5s;"></div>
+    </div>
+
+    {{-- Content --}}
+    <main class="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
+        <div class="max-w-2xl w-full text-center space-y-6 sm:space-y-8">
+
+            {{-- Icon --}}
+            <div class="flex justify-center">
+                <div class="relative">
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center">
+                        <svg class="w-12 h-12 sm:w-16 sm:h-16 text-emerald-400 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <span class="absolute inset-0 rounded-full border-2 border-emerald-500/30 animate-ping"></span>
+                </div>
+            </div>
+
+            {{-- Badge --}}
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-bold backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                MAINTENANCE MODE
+            </div>
+
+            {{-- Title --}}
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                {{ $title }}
+            </h1>
+
+            {{-- Message --}}
+            @if($message)
+                <p class="text-sm sm:text-base md:text-lg text-slate-400 leading-relaxed max-w-xl mx-auto">
+                    {{ $message }}
+                </p>
+            @endif
+
+            {{-- ETA --}}
+            @if(!empty($eta))
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold backdrop-blur-md">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{ $eta }}
+                </div>
+            @endif
+
+            {{-- Divider --}}
+            <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 to-transparent mx-auto rounded-full"></div>
+
+            {{-- Contact --}}
+            @if(!empty($contactEmail))
+                <div class="text-sm text-slate-500">
+                    Butuh bantuan? Hubungi</br>
+                    <a href="mailto:{{ $contactEmail }}" class="text-emerald-400 hover:text-emerald-300 font-semibold underline underline-offset-2 transition-colors">
+                        {{ $contactEmail }}
+                    </a>
+                </div>
+            @endif
+
+        </div>
+    </main>
+
+</body>
+</html>
