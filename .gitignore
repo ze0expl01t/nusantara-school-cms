@@ -118,3 +118,4 @@ public/hot
 Thumbs.db
 .idea/
 .vscode/
+\n\n# Temïporary Scripts\naudit-project.php\nrollback_*.sh\n

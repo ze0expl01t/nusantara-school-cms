@@ -2,7 +2,6 @@
 
 @section('title', isset($agenda) && $agenda->title ? $agenda->title . ' | SMKMUH1BLORA' : 'Detail Agenda | HSE & K3 Applications')
 
-{{{{-- SEO META --}}\n@push('head')\n    <meta name="description" content="{{ Str::limit($agenda->meta_description ?? $agenda->description ?? '', 160) }}">\n    <meta property="og:title" content="{{ $agenda->meta_title ?? Str::limit($agenda->title ?? '', 70) }}">\n    <meta property="og:description" content="{{ Str::limit($agenda->meta_description ?? $agenda->description ?? '', 160) }}">\n@endpush}
 @push('head')
     <meta name="description" content="{{ Str::limit($agenda->meta_description ?? $agenda->description ?? $agenda->summary ?? $agenda->excerpt ?? '', 160) }}">
     
@@ -10,7 +9,7 @@
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:title" content="{{ $agenda->meta_title ?? Str::limit($agenda->title ?? $agenda->name ?? config('app.name'), 70) }}">
     <meta property="og:description" content="{{ Str::limit($agenda->meta_description ?? $agenda->description ?? $agenda->summary ?? $agenda->excerpt ?? '', 160) }}">
-    @if(isset($agenda->image) && $agenda->image)
+    @if($agenda->image('cover'))
         <meta property="og:image" content="{{ $agenda->image('cover', 'default') ?? $agenda->image('thumbnail', 'default') ?? '' }}">
     @endif
 

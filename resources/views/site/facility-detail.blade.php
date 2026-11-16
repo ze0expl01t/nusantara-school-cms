@@ -4,7 +4,6 @@
     ? $facility->title . ' | SMKMUH1BLORA'
     : 'Detail Fasilitas | HSE & K3 Applications')
 
-{{{{-- SEO META --}}\n@push('head')\n    <meta name="description" content="{{ Str::limit($facility->meta_description ?? $facility->description ?? '', 160) }}">\n    <meta property="og:title" content="{{ $facility->meta_title ?? Str::limit($facility->title ?? '', 70) }}">\n    <meta property="og:description" content="{{ Str::limit($facility->meta_description ?? $facility->description ?? '', 160) }}">\n@endpush}
 @push('head')
     <meta name="description" content="{{ Str::limit($facility->meta_description ?? $facility->description ?? $facility->summary ?? $facility->excerpt ?? '', 160) }}">
     
@@ -12,7 +11,7 @@
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:title" content="{{ $facility->meta_title ?? Str::limit($facility->title ?? $facility->name ?? config('app.name'), 70) }}">
     <meta property="og:description" content="{{ Str::limit($facility->meta_description ?? $facility->description ?? $facility->summary ?? $facility->excerpt ?? '', 160) }}">
-    @if(isset($facility->image) && $facility->image)
+    @if($facility->image('cover'))
         <meta property="og:image" content="{{ $facility->image('cover', 'default') ?? $facility->image('thumbnail', 'default') ?? '' }}">
     @endif
 

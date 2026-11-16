@@ -1,102 +1,53 @@
 @extends('site.layouts.master')
 
-@section('title', isset($brosur) && $brosur->title ? $brosur->title . ' | SMKMUH1BLORA' : 'Detail Brosur | HSE & K3 Applications')
-
-@push('head')
-    <meta name="description" content="{{ Str::limit($brosur->meta_description ?? $brosur->description ?? $brosur->summary ?? $brosur->excerpt ?? '', 160) }}">
-    
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ request()->url() }}">
-    <meta property="og:title" content="{{ $brosur->meta_title ?? Str::limit($brosur->title ?? $brosur->name ?? config('app.name'), 70) }}">
-    <meta property="og:description" content="{{ Str::limit($brosur->meta_description ?? $brosur->description ?? $brosur->summary ?? $brosur->excerpt ?? '', 160) }}">
-    @if($brosur->image('cover'))
-        <meta property="og:image" content="{{ $brosur->image('cover', 'default') ?? $brosur->image('thumbnail', 'default') ?? '' }}">
-    @endif
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $brosur->meta_title ?? Str::limit($brosur->title ?? $brosur->name ?? config('app.name'), 70) }}">
-    <meta name="twitter:description" content="{{ Str::limit($brosur->meta_description ?? $brosur->description ?? $brosur->summary ?? $brosur->excerpt ?? '', 160) }}">
-@endpush
-@section('meta_title',
-    $brosur->meta_title
-        ? $brosur->meta_title
-        : ($brosur->title . ' | ' . config('app.name'))
-)
-
-@section('meta_description',
-    $brosur->meta_description
-        ? $brosur->meta_description
-        : \Illuminate\Support\Str::limit(strip_tags($brosur->description ?? ''), 160)
-)
-
-@if($brosur->hasImage('og_image', 'default'))
-    @section('og_image', $brosur->image('og_image', 'default'))
-@endif
-
-@section('content')
 @php
-    // ===== Meta brosur =====
     $locale = app()->getLocale();
+    $siteName = config('app.name', 'SMKMUH1BLORA');
+
+    $brosurTitle    = $brosur->title ?: 'Detail Brosur';
+    $brosurImageAlt = trim(strip_tags($brosurTitle)) ?: 'Cover brosur';
+
+    $resolvedMetaTitle = $brosur->meta_title ?: ($brosurTitle . ' | ' . $siteName);
+    $resolvedMetaDesc  = $brosur->meta_description
+        ?: \Illuminate\Support\Str::limit(
+            trim(strip_tags($brosur->description ?? $brosur->summary ?? $brosur->excerpt ?? '')),
+            160
+        );
 
     $dateObj = $brosur->brosur_date
         ? \Carbon\Carbon::parse($brosur->brosur_date)->locale($locale)->timezone('Asia/Jakarta')
         : null;
 
-    $brosurTitle    = $brosur->title ?: 'Detail Brosur';
-    $brosurImageAlt = trim(strip_tags($brosurTitle)) ?: 'Cover brosur';
-
-    // Cover image
+    // Cover & OG Image
     $coverImage = $brosur->hasImage('cover')
         ? $brosur->image('cover', 'default')
         : null;
 
-    // ===== FILE DOWNLOAD: extract URL + fallback =====
+    $ogImage = $brosur->hasImage('og_image', 'default')
+        ? $brosur->image('og_image', 'default')
+        : ($coverImage ?? ($brosur->hasImage('thumbnail') ? $brosur->image('thumbnail', 'default') : null));
+
+    // ===== FILE DOWNLOAD: extract URL & nama file (Twill CMS) =====
     $downloadUrl  = null;
     $downloadName = null;
 
-    // 1. Coba method bawaan Twill (returns File model)
-    try {
-        $fileModel = $brosur->file('download_file');
-
-        if ($fileModel) {
-            $downloadName = $fileModel->filename ?? null;
-
-            // Coba property `url` (kalau ada)
-            $downloadUrl = $fileModel->url ?? null;
-
-            // Fallback: bangun dari uuid
-            if (!$downloadUrl && !empty($fileModel->uuid)) {
-                $downloadUrl = asset('storage/uploads/' . ltrim($fileModel->uuid, '/'));
-            }
-
-            // Fallback: bangun dari path
-            if (!$downloadUrl && !empty($fileModel->path)) {
-                $downloadUrl = asset('storage/uploads/' . ltrim($fileModel->path, '/'));
-            }
+    // 1. Method resmi Twill CMS: fileObject() mengembalikan model File, file() mengembalikan string URL
+    if (method_exists($brosur, 'fileObject')) {
+        $fileObj = $brosur->fileObject('download_file');
+        if ($fileObj) {
+            $downloadUrl  = $brosur->file('download_file');
+            $downloadName = $fileObj->filename ?? null;
         }
-    } catch (\Throwable $e) {
-        // lanjut ke fallback
     }
 
-    // 2. Fallback: query langsung ke pivot (kalau method file() gagal / null)
-    if (!$downloadUrl) {
-        try {
-            $fileRow = \DB::table('twill_fileables')
-                ->join('twill_files', 'twill_files.id', '=', 'twill_fileables.file_id')
-                ->where('twill_fileables.fileable_type', 'App\Models\Brosur')
-                ->where('twill_fileables.fileable_id', $brosur->id)
-                ->where('twill_fileables.role', 'download_file')
-                ->whereNull('twill_files.deleted_at')
-                ->orderBy('twill_fileables.id', 'desc')
-                ->select('twill_files.uuid', 'twill_files.filename')
-                ->first();
-
-            if ($fileRow && !empty($fileRow->uuid)) {
-                $downloadUrl  = asset('storage/uploads/' . ltrim($fileRow->uuid, '/'));
-                $downloadName = $fileRow->filename;
-            }
-        } catch (\Throwable $e) {
-            $downloadUrl = null;
+    // 2. Fallback langsung dari relasi $brosur->files (role: download_file)
+    if (!$downloadUrl && method_exists($brosur, 'files')) {
+        $fileRel = $brosur->files->where('pivot.role', 'download_file')->first();
+        if ($fileRel) {
+            $downloadName = $fileRel->filename ?? null;
+            $downloadUrl  = method_exists($fileRel, 'toCmsArray')
+                ? ($fileRel->toCmsArray()['src'] ?? null)
+                : asset('storage/uploads/' . ltrim($fileRel->uuid, '/'));
         }
     }
 
@@ -126,6 +77,30 @@
         : null;
 @endphp
 
+@section('title', $resolvedMetaTitle)
+@section('meta_title', $resolvedMetaTitle)
+@section('meta_description', $resolvedMetaDesc)
+
+@if($ogImage)
+    @section('og_image', $ogImage)
+@endif
+
+@push('head')
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ request()->url() }}">
+    <meta property="og:title" content="{{ $resolvedMetaTitle }}">
+    @if($resolvedMetaDesc)
+        <meta property="og:description" content="{{ $resolvedMetaDesc }}">
+        <meta name="twitter:description" content="{{ $resolvedMetaDesc }}">
+    @endif
+    @if($ogImage)
+        <meta property="og:image" content="{{ $ogImage }}">
+    @endif
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $resolvedMetaTitle }}">
+@endpush
+
+@section('content')
 <main class="py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto relative overflow-hidden">
 
     {{-- Efek Ambient Glow --}}
@@ -141,7 +116,6 @@
 
         {{-- Header Brosur --}}
         <div class="space-y-3">
-
             @if($dateObj)
                 <div class="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-emerald-600 text-[11px] sm:text-xs font-semibold shadow-sm">
                     <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -174,7 +148,7 @@
         @if($downloadUrl)
             <div class="p-5 sm:p-6 bg-white border border-emerald-500/30 rounded-2xl sm:rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
 
-                <div class="flex items-center gap-3 w-full sm:w-auto">
+                <div class="flex items-center gap-3 w-full sm:w-auto min-w-0">
                     <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm">
                         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -190,12 +164,13 @@
 
                 <a
                     href="{{ $downloadUrl }}"
+                    @if($downloadName) download="{{ $downloadName }}" @else download @endif
                     target="_blank"
                     rel="noopener noreferrer"
                     data-analytics="brosur-download"
                     data-brosur-id="{{ $brosur->id }}"
                     aria-label="Download file brosur {{ $brosurTitle }}"
-                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none"
+                    class="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none"
                 >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>

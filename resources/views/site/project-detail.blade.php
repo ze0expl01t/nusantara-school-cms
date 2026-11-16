@@ -2,7 +2,6 @@
 
 @section('title', isset($project) && $project->title ? $project->title . ' | SMKMUH1BLORA' : 'Detail Project | HSE & K3 Applications')
 
-{{{{-- SEO META --}}\n@push('head')\n    <meta name="description" content="{{ Str::limit($project->meta_description ?? $project->description ?? '', 160) }}">\n    <meta property="og:title" content="{{ $project->meta_title ?? Str::limit($project->title ?? '', 70) }}">\n    <meta property="og:description" content="{{ Str::limit($project->meta_description ?? $project->description ?? '', 160) }}">\n@endpush}
 @push('head')
     <meta name="description" content="{{ Str::limit($project->meta_description ?? $project->description ?? $project->summary ?? $project->excerpt ?? '', 160) }}">
     
@@ -10,7 +9,7 @@
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:title" content="{{ $project->meta_title ?? Str::limit($project->title ?? $project->name ?? config('app.name'), 70) }}">
     <meta property="og:description" content="{{ Str::limit($project->meta_description ?? $project->description ?? $project->summary ?? $project->excerpt ?? '', 160) }}">
-    @if(isset($project->image) && $project->image)
+    @if($project->image('cover'))
         <meta property="og:image" content="{{ $project->image('cover', 'default') ?? $project->image('thumbnail', 'default') ?? '' }}">
     @endif
 

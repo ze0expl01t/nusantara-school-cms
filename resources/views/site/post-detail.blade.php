@@ -2,7 +2,6 @@
 
 @section('title', isset($post) && $post->title ? $post->title . ' | SMKMUH1BLORA' : 'Detail Post | HSE & K3 Applications')
 
-{{{{-- SEO META --}}\n@push('head')\n    <meta name="description" content="{{ Str::limit($post->meta_description ?? $post->description ?? '', 160) }}">\n    <meta property="og:title" content="{{ $post->meta_title ?? Str::limit($post->title ?? '', 70) }}">\n    <meta property="og:description" content="{{ Str::limit($post->meta_description ?? $post->description ?? '', 160) }}">\n@endpush}
 @push('head')
     <meta name="description" content="{{ Str::limit($post->meta_description ?? $post->description ?? $post->summary ?? $post->excerpt ?? '', 160) }}">
     
@@ -10,7 +9,7 @@
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:title" content="{{ $post->meta_title ?? Str::limit($post->title ?? $post->name ?? config('app.name'), 70) }}">
     <meta property="og:description" content="{{ Str::limit($post->meta_description ?? $post->description ?? $post->summary ?? $post->excerpt ?? '', 160) }}">
-    @if(isset($post->image) && $post->image)
+    @if($post->image('cover'))
         <meta property="og:image" content="{{ $post->image('cover', 'default') ?? $post->image('thumbnail', 'default') ?? '' }}">
     @endif
 

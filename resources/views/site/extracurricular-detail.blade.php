@@ -4,7 +4,6 @@
     ? $extracurricular->title . ' | SMKMUH1BLORA'
     : 'Detail Ekstrakurikuler | HSE & K3 Applications')
 
-{{{{-- SEO META --}}\n@push('head')\n    <meta name="description" content="{{ Str::limit($extracurricular->meta_description ?? $extracurricular->description ?? '', 160) }}">\n    <meta property="og:title" content="{{ $extracurricular->meta_title ?? Str::limit($extracurricular->title ?? '', 70) }}">\n    <meta property="og:description" content="{{ Str::limit($extracurricular->meta_description ?? $extracurricular->description ?? '', 160) }}">\n@endpush}
 @push('head')
     <meta name="description" content="{{ Str::limit($extracurricular->meta_description ?? $extracurricular->description ?? $extracurricular->summary ?? $extracurricular->excerpt ?? '', 160) }}">
     
@@ -12,7 +11,7 @@
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:title" content="{{ $extracurricular->meta_title ?? Str::limit($extracurricular->title ?? $extracurricular->name ?? config('app.name'), 70) }}">
     <meta property="og:description" content="{{ Str::limit($extracurricular->meta_description ?? $extracurricular->description ?? $extracurricular->summary ?? $extracurricular->excerpt ?? '', 160) }}">
-    @if(isset($extracurricular->image) && $extracurricular->image)
+    @if($extracurricular->image('cover'))
         <meta property="og:image" content="{{ $extracurricular->image('cover', 'default') ?? $extracurricular->image('thumbnail', 'default') ?? '' }}">
     @endif
 
