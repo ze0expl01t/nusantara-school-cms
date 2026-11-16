@@ -20,11 +20,12 @@ Portal informasi dan manajemen konten sekolah berbasis **Laravel**, **Twill CMS*
    ```
 3. **Konfigurasi Environment:**
    Sesuaikan `APP_URL`, `ADMIN_APP_URL`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di file `.env`.
-4. **Migrasi Database & Buat Akun Admin Twill:**
+4. **Migrasi Database & Seeder Data Awal:**
    ```bash
    php artisan migrate:fresh --seed
    php artisan twill:superadmin
    ```
+   > **Catatan Media & Uploads:** Perintah `migrate:fresh --seed` hanya memulihkan struktur dan data database. Untuk menampilkan file gambar, media, serta PDF brosur di lingkungan baru, salin atau ekstrak arsip folder `storage/app/public/uploads` dari backup produksi dan pastikan symlink `php artisan storage:link` sudah aktif.
 
 ---
 
