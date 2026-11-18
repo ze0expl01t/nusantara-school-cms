@@ -1,12 +1,12 @@
 @extends('site.layouts.master')
 
-@section('title', 'Divisi | SMKMUH1BLORA')
+@section('title', 'Jurusan | SMKMUH1BLORA')
 
 @section('content')
 @php
     // ===== Header Content (hardcode, karena ini page bukan block) =====
     $badgeText      = 'Program Keahlian';
-    $titleMain      = 'Divisi';
+    $titleMain      = 'Jurusan';
     $titleHighlight = '& Program Keahlian';
     $subtitle       = 'Pilihan program keahlian untuk mengembangkan kompetensi dan keterampilan karyawan.';
 @endphp
@@ -39,9 +39,9 @@
             @endif
         </div>
 
-        @if($divisis->count() > 0)
+        @if($jurusans->count() > 0)
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                @foreach($divisis as $item)
+                @foreach($jurusans as $item)
                     @php
                         $cover = $item->hasImage('cover') ? $item->image('cover', 'default') : null;
                         $slug = $item->slug
@@ -49,7 +49,7 @@
                             ?? optional($item->slugs->first())->slug;
                     @endphp
 
-                    <a href="{{ route('divisi.show', $slug) }}"
+                    <a href="{{ route('jurusan.show', $slug) }}"
                        class="group relative bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/50 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
 
                         {{-- Top accent bar muncul saat hover --}}
@@ -100,7 +100,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
                                     <span class="text-xs text-slate-500">
-                                        <span class="text-slate-400">Ka. Divisi:</span>
+                                        <span class="text-slate-400">Ka. Jurusan:</span>
                                         <span class="font-semibold text-slate-700">{{ $item->head_of_department }}</span>
                                     </span>
                                 </div>
@@ -114,7 +114,7 @@
                 <svg class="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
-                <p class="text-slate-500 text-sm font-medium">Belum ada divisi yang dipublikasikan.</p>
+                <p class="text-slate-500 text-sm font-medium">Belum ada jurusan yang dipublikasikan.</p>
             </div>
         @endif
 

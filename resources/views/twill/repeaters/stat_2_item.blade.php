@@ -3,7 +3,7 @@
 
 @formField('input', [
     'name' => 'label',
-    'label' => 'Nama Divisi / Kategori (Contoh: Teknik Kendaraan Ringan (TKR))',
+    'label' => 'Nama Jurusan / Kategori (Contoh: Teknik Kendaraan Ringan (TKR))',
     'translatable' => true
 ])
 

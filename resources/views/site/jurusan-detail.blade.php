@@ -2,7 +2,7 @@
 
 @section('title', isset($jurusan) && $jurusan->title
     ? $jurusan->title . ' | SMKMUH1BLORA'
-    : 'Detail Divisi | SMKMUH1BLORA')
+    : 'Detail Jurusan | SMKMUH1BLORA')
 
 {{-- SEO META --}}
 @section('meta_title',
@@ -25,8 +25,8 @@
 @php
     $locale = app()->getLocale();
 
-    $title = $jurusan->title ?: 'Detail Divisi';
-    $imageAlt = trim(strip_tags($title)) ?: 'Cover divisi';
+    $title = $jurusan->title ?: 'Detail Jurusan';
+    $imageAlt = trim(strip_tags($title)) ?: 'Cover jurusan';
 
     $coverImage = $jurusan->hasImage('cover')
         ? $jurusan->image('cover', 'default')
@@ -61,10 +61,10 @@
         . '[&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:overflow-x-auto [&_pre]:my-4 '
         . '[&_hr]:my-6 [&_hr]:border-slate-200';
 
-    $nextSlug = isset($nextDivisi)
-        ? ($nextDivisi->slug
-            ?? optional($nextDivisi->slugs->where('locale', $locale)->first())->slug
-            ?? optional($nextDivisi->slugs->first())->slug)
+    $nextSlug = isset($nextJurusan)
+        ? ($nextJurusan->slug
+            ?? optional($nextJurusan->slugs->where('locale', $locale)->first())->slug
+            ?? optional($nextJurusan->slugs->first())->slug)
         : null;
 @endphp
 
@@ -77,7 +77,7 @@
 
         {{-- Breadcrumb Navigation --}}
         @include('site.partials.breadcrumb', ['items' => [
-            ['label' => 'Divisi', 'url' => url('/divisi')],
+            ['label' => 'Jurusan', 'url' => url('/jurusan')],
             ['label' => $title, 'url' => null],
         ]])
 
@@ -137,7 +137,7 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                                Kepala Divisi
+                                Kepala Jurusan
                             </p>
                             <p class="text-sm font-bold text-slate-900 truncate">{{ $headOfDepartment }}</p>
                         </div>
@@ -246,16 +246,16 @@
         @endif
 
         {{-- Navigasi Next --}}
-        @if(isset($nextDivisi) && $nextSlug)
+        @if(isset($nextJurusan) && $nextSlug)
             <div class="pt-4 sm:pt-6 border-t border-slate-200 flex items-center justify-end">
-                <a href="{{ route('divisi.show', $nextSlug) }}"
-                    data-analytics="divisi-next-click"
-                    data-divisi-id="{{ $nextDivisi->id }}"
+                <a href="{{ route('jurusan.show', $nextSlug) }}"
+                    data-analytics="jurusan-next-click"
+                    data-jurusan-id="{{ $nextJurusan->id }}"
                     class="group inline-flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 text-slate-700 transition-all duration-300 shadow-sm">
                     <div class="text-right min-w-0">
-                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Divisi Selanjutnya</span>
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Jurusan Selanjutnya</span>
                         <span class="block text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-600 transition-colors max-w-[180px] sm:max-w-xs truncate">
-                            {{ $nextDivisi->title }}
+                            {{ $nextJurusan->title }}
                         </span>
                     </div>
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 border border-emerald-200 group-hover:border-emerald-500 group-hover:bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0 transition-all duration-300">

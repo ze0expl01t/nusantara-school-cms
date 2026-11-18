@@ -12,7 +12,7 @@
 <x-twill::input
     name="title"
     label="Judul Milestone"
-    placeholder="Contoh: Berdiri dengan 3 Divisi"
+    placeholder="Contoh: Berdiri dengan 3 Jurusan"
     :translated="true"
     :maxlength="200"
     required

@@ -90,8 +90,8 @@
             'icon' => 'chat',
         ],
         [
-            'text' => $safeInput($block, 'cta_2_text', 'Info Divisi'),
-            'url'  => $safeInput($block, 'cta_2_url', '#divisi'),
+            'text' => $safeInput($block, 'cta_2_text', 'Info Jurusan'),
+            'url'  => $safeInput($block, 'cta_2_url', '#jurusan'),
             'icon' => 'academic',
         ],
         [

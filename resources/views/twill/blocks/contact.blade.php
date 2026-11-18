@@ -123,7 +123,7 @@
         <x-twill::input
             name="cta_2_text"
             label="CTA 2 — Text"
-            placeholder="Info Divisi"
+            placeholder="Info Jurusan"
             :translated="true"
         />
     </div>
@@ -131,7 +131,7 @@
         <x-twill::input
             name="cta_2_url"
             label="CTA 2 — URL"
-            placeholder="#divisi atau /halaman-divisi"
+            placeholder="#jurusan atau /halaman-jurusan"
         />
     </div>
 </div>

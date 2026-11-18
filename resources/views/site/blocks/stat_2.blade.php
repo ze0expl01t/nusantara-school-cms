@@ -96,7 +96,7 @@
                             @foreach($statItems as $item)
                                 @php
                                     $percentage = min(max((int) $safeInput($item, 'percentage', 90), 0), 100);
-                                    $label      = $safeInput($item, 'label', 'Divisi');
+                                    $label      = $safeInput($item, 'label', 'Jurusan');
                                 @endphp
 
                                 <div class="space-y-1.5 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200/80 hover:border-emerald-500/40 transition-colors duration-300 shadow-sm motion-reduce:transition-none">
