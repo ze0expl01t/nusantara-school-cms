@@ -1,7 +1,12 @@
 <div align="center">
 
-<!-- HERO BANNER -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,50:065F46,100:10B981&height=210&section=header&text=Nusantara%20School%20CMS&fontSize=44&fontColor=FFFFFF&fontAlignY=38&desc=Enterprise%20Educational%20Portal%20%26%20Modular%20Content%20Platform&descAlignY=58&descSize=16&animation=fadeIn" width="100%" alt="Nusantara School CMS Banner" />
+<br/>
+
+<img src="https://api.iconify.design/heroicons/academic-cap-solid.svg?color=%2310b981&width=64&height=64" width="64" height="64" alt="Nusantara School CMS Logo" />
+
+# Nusantara School CMS
+
+**Enterprise Educational Portal & Modular Content Management Platform**
 
 <p align="center">
   <a href="https://github.com/ze0expl01t/nusantara-school-cms/releases/tag/v1.0.0">
@@ -15,42 +20,43 @@
 </p>
 
 <p align="center">
-  <strong>Platform CMS modern berkecepatan tinggi untuk Sekolah, Madrasah, dan Institusi Vokasi.</strong><br/>
+  Platform CMS modern berkecepatan tinggi untuk Sekolah, Madrasah, dan Institusi Vokasi.<br/>
   Dibangun dengan arsitektur modular <em>Block-Builder</em>, migrasi bersih anti-bentrok vendor, integrasi GA4, <em>Smart Backup</em>, dan pemindai keamanan otomatis.
 </p>
 
 <p align="center">
-  <a href="#-quick-start-clone--live">⚡ Quick Start</a> •
-  <a href="#-arsitektur--tech-stack">🛠️ Tech Stack</a> •
-  <a href="#-konfigurasi-kritis-env">⚙️ Konfigurasi</a> •
-  <a href="#-deployment-produksi">🌐 Production Deploy</a> •
-  <a href="#-troubleshooting">🔍 Troubleshooting</a>
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#konfigurasi">Konfigurasi</a> •
+  <a href="#reset-password">Reset Password</a> •
+  <a href="#production-deploy">Production Deploy</a> •
+  <a href="#troubleshooting">Troubleshooting</a>
 </p>
 
 </div>
 
 ---
 
-## ✨ Mengapa Nusantara School CMS?
+## <img src="https://api.iconify.design/heroicons/sparkles-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Mengapa Nusantara School CMS?
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h3>🎓 Modul Akademik & Jurusan Terpadu</h3>
+      <h3><img src="https://api.iconify.design/heroicons/academic-cap-solid.svg?color=%2310b981&width=20&height=20" width="20" height="20" align="absmiddle" /> Modul Akademik & Jurusan Terpadu</h3>
       <p>Pengelolaan halaman profil sekolah, struktur organisasi, serta modul <strong>Kompetensi Keahlian / Jurusan</strong> (<code>/jurusan</code> & <code>/jurusan/{slug}</code>) lengkap dengan akreditasi, kepala jurusan, kurikulum, dan fasilitas.</p>
     </td>
     <td width="50%" valign="top">
-      <h3>🧱 Twill Block Builder & Repeaters</h3>
+      <h3><img src="https://api.iconify.design/heroicons/squares-2x2-solid.svg?color=%230ea5e9&width=20&height=20" width="20" height="20" align="absmiddle" /> Twill Block Builder & Repeaters</h3>
       <p>Susun <em>landing page</em> secara visual tanpa menyentuh kode menggunakan blok modular (<code>hero</code>, <code>stat_2</code>, <code>milestone</code>, <code>contact</code>, <code>gallery</code>, <code>cta</code>) dan <em>Pure CSS Announcement Bar</em> (Zero-JS, anti-CSP block).</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>⚡ Auto-Setup CLI & Clean Migration</h3>
+      <h3><img src="https://api.iconify.design/heroicons/bolt-solid.svg?color=%23f59e0b&width=20&height=20" width="20" height="20" align="absmiddle" /> Auto-Setup CLI & Clean Migration</h3>
       <p>Dilengkapi skrip <code>setup.php</code> dan pemisahan total <strong>47 tabel modul custom</strong> dari tabel vendor Twill CMS. Eksekusi <code>php artisan migrate:fresh --seed</code> berjalan mulus tanpa error <em>Table already exists</em>.</p>
     </td>
     <td width="50%" valign="top">
-      <h3>🛡️ Enterprise Security & Smart Backup</h3>
+      <h3><img src="https://api.iconify.design/heroicons/shield-check-solid.svg?color=%236366f1&width=20&height=20" width="20" height="20" align="absmiddle" /> Enterprise Security & Smart Backup</h3>
       <p>Dilengkapi header CSP ketat, sanitasi XSS (<code>safe_html</code>), pemindai kerentanan terjadwal (<code>checkpoint:scan</code>), serta kompresi backup cerdas yang mengecualikan <code>vendor/</code> dan <code>node_modules/</code>.</p>
     </td>
   </tr>
@@ -58,18 +64,19 @@
 
 ---
 
-## 🛠️ Arsitektur & Tech Stack
+<a id="tech-stack"></a>
+## <img src="https://api.iconify.design/heroicons/cpu-chip-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Arsitektur & Tech Stack
 
 ```mermaid
 flowchart LR
-    Client["🌐 Browser / Mobile"] --> CF["☁️ Cloudflare CDN & SSL"]
-    CF --> OLS["⚡ OpenLiteSpeed (lsphp84)"]
-    OLS --> MW["🛡️ Middleware Pipeline\n(AddCspHeader • MinifyHtml)"]
-    MW --> App["🚀 Laravel 13 + Twill CMS 3.6"]
-    App --> DB[("🗄️ MariaDB / MySQL")]
-    App --> Redis[("⚡ Redis 7\n(Session • Cache • Queue)")]
-    Redis --> Horizon["📊 Laravel Horizon\n(Nested Menu & Jobs)"]
-    App --> GA4["📈 Google Analytics 4\n(Service Account API)"]
+    Client["Browser / Mobile"] --> CF["Cloudflare CDN & SSL"]
+    CF --> OLS["OpenLiteSpeed (lsphp84)"]
+    OLS --> MW["Middleware Pipeline\n(AddCspHeader • MinifyHtml)"]
+    MW --> App["Laravel 13 + Twill CMS 3.6"]
+    App --> DB[("MariaDB / MySQL")]
+    App --> Redis[("Redis 7\n(Session • Cache • Queue)")]
+    Redis --> Horizon["Laravel Horizon\n(Nested Menu & Jobs)"]
+    App --> GA4["Google Analytics 4\n(Service Account API)"]
 ```
 
 | Layer | Teknologi | Versi | Peran Utama |
@@ -85,7 +92,8 @@ flowchart LR
 
 ---
 
-## ⚡ Quick Start (Clone → Live)
+<a id="quick-start"></a>
+## <img src="https://api.iconify.design/heroicons/rocket-launch-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Quick Start (Clone → Live)
 
 Gunakan **CLI Auto-Installer (`setup.php`)** untuk menyiapkan seluruh dependensi, konfigurasi `.env`, *application key*, *storage symlink*, dan kompilasi aset frontend secara otomatis:
 
@@ -110,14 +118,15 @@ php artisan twill:superadmin
 php artisan serve
 ```
 
-> 💡 **Akses Aplikasi:**
+> **Akses Aplikasi:**
 > - **Portal Publik:** `http://127.0.0.1:8000`
 > - **Panel Admin Twill:** `http://127.0.0.1:8000/panel-maintenance` *(sesuai `ADMIN_APP_PATH`)*
 > - **Horizon Dashboard:** `http://127.0.0.1:8000/horizon`
 
 ---
 
-## ⚙️ Konfigurasi Kritis (`.env`)
+<a id="konfigurasi"></a>
+## <img src="https://api.iconify.design/heroicons/cog-6-tooth-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Konfigurasi Kritis (`.env`)
 
 Pastikan parameter inti berikut terisi dengan benar pada file `.env` Anda:
 
@@ -162,7 +171,45 @@ ANALYTICS_PROPERTY_ID=
 
 ---
 
-## 📊 Integrasi Google Analytics 4 (GA4)
+<a id="reset-password"></a>
+## <img src="https://api.iconify.design/heroicons/key-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Reset Password Admin & User via Tinker
+
+Setelah menjalankan `php artisan migrate:fresh --seed` menggunakan data snapshot (`LiveDatabaseSeeder`), seluruh password akun di database disanitasi demi keamanan. Gunakan **Laravel Tinker** melalui terminal untuk mengatur ulang password seluruh pengguna sekaligus atau akun tertentu:
+
+### 1. Reset Password untuk Semua User (Twill Admin & Frontend Users)
+```bash
+php artisan tinker --execute='
+$newPassword = \Illuminate\Support\Facades\Hash::make("PasswordBaruAnda123!");
+$twillCount = \A17\Twill\Models\User::query()->update(["password" => $newPassword, "published" => 1]);
+$appCount   = class_exists(\App\Models\User::class) ? \App\Models\User::query()->update(["password" => $newPassword]) : 0;
+echo "Berhasil reset password untuk {$twillCount} Twill user dan {$appCount} App user." . PHP_EOL;
+'
+```
+
+### 2. Reset Password untuk Satu User Tertentu (Berdasarkan Email)
+```bash
+php artisan tinker --execute='
+$user = \A17\Twill\Models\User::where("email", "admin@sekolah.sch.id")->firstOrFail();
+$user->password = \Illuminate\Support\Facades\Hash::make("PasswordBaruAnda123!");
+$user->published = 1;
+$user->save();
+echo "Password untuk {$user->email} berhasil diperbarui!" . PHP_EOL;
+'
+```
+
+### 3. Melihat Daftar Email Akun Twill Admin yang Terdaftar
+```bash
+php artisan tinker --execute='
+\A17\Twill\Models\User::all(["id", "name", "email", "role", "published"])->each(fn($u) => print_r($u->toArray()));
+'
+```
+
+> [!TIP]
+> Gunakan kombinasi password minimal 12 karakter (huruf besar, huruf kecil, angka, dan simbol) sebelum melakukan deployment ke server produksi.
+
+---
+
+## <img src="https://api.iconify.design/heroicons/chart-bar-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Integrasi Google Analytics 4 (GA4)
 
 Dashboard analitik terintegrasi (`spatie/laravel-analytics`) menampilkan statistik pengunjung dan pelacakan klik unduhan brosur (`data-analytics`) langsung di panel admin:
 
@@ -170,17 +217,17 @@ Dashboard analitik terintegrasi (`spatie/laravel-analytics`) menampilkan statist
 <summary><strong>Klik untuk melihat langkah konfigurasi GA4 Service Account</strong></summary>
 
 1. **Ambil Property ID GA4:**
-   Buka **Google Analytics** $\rightarrow$ **Admin** $\rightarrow$ **Property Settings** $\rightarrow$ **Property Details**, lalu salin angka **Property ID** (contoh: `456789123`, *bukan* Measurement ID `G-XXXX`).
+   Buka **Google Analytics** → **Admin** → **Property Settings** → **Property Details**, lalu salin angka **Property ID** (contoh: `456789123`, *bukan* Measurement ID `G-XXXX`).
 2. **Buat Service Account di Google Cloud:**
    - Buka [Google Cloud Console](https://console.cloud.google.com/), aktifkan **Google Analytics Data API**.
-   - Masuk ke **IAM & Admin $\rightarrow$ Service Accounts** $\rightarrow$ buat akun baru, lalu buat key berformat **JSON**.
+   - Masuk ke **IAM & Admin → Service Accounts** → buat akun baru, lalu buat key berformat **JSON**.
 3. **Simpan Kredensial JSON:**
    Letakkan file JSON ke lokasi berikut *(sudah dikecualikan di `.gitignore`)*:
    ```text
    storage/app/analytics/service-account-credentials.json
    ```
 4. **Berikan Akses Viewer di GA4:**
-   Salin `client_email` dari file JSON, lalu tambahkan ke **Google Analytics $\rightarrow$ Admin $\rightarrow$ Property Access Management** dengan peran **Viewer**.
+   Salin `client_email` dari file JSON, lalu tambahkan ke **Google Analytics → Admin → Property Access Management** dengan peran **Viewer**.
 5. **Perbarui `.env`:**
    ```env
    ANALYTICS_PROPERTY_ID=456789123
@@ -190,7 +237,7 @@ Dashboard analitik terintegrasi (`spatie/laravel-analytics`) menampilkan statist
 
 ---
 
-## 📁 Struktur Direktori
+## <img src="https://api.iconify.design/heroicons/folder-open-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Struktur Direktori
 
 ```text
 nusantara-school-cms/
@@ -223,7 +270,8 @@ nusantara-school-cms/
 
 ---
 
-## 🌐 Deployment Produksi (OpenLiteSpeed / CyberPanel)
+<a id="production-deploy"></a>
+## <img src="https://api.iconify.design/heroicons/server-stack-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Deployment Produksi (OpenLiteSpeed / CyberPanel)
 
 1. **Konfigurasi Environment Produksi (`.env`):**
    ```env
@@ -264,7 +312,8 @@ nusantara-school-cms/
 
 ---
 
-## 🔍 Troubleshooting Cepat
+<a id="troubleshooting"></a>
+## <img src="https://api.iconify.design/heroicons/wrench-screwdriver-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Troubleshooting Cepat
 
 | Gejala | Penyebab Utama | Solusi |
 | :--- | :--- | :--- |
@@ -275,7 +324,7 @@ nusantara-school-cms/
 
 ---
 
-## 📌 Release Notes (`v1.0.0`)
+## <img src="https://api.iconify.design/heroicons/tag-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Release Notes (`v1.0.0`)
 
 - **Standardisasi Modul Jurusan:** Migrasi menyeluruh istilah *"divisi"* menjadi *"jurusan"* di seluruh tampilan (`jurusan-list.blade.php`, `jurusan-detail.blade.php`), Twill repeaters, blok kontak, serta rute (`/jurusan` & `/jurusan/{slug}`).
 - **Clean Migration & Live Seeder:** Pemisahan penuh 47 tabel modul custom dari migrasi vendor Twill CMS (`2026_11_16_000001_create_nusantara_tables.php`) + `LiveDatabaseSeeder`.
@@ -287,9 +336,9 @@ nusantara-school-cms/
 
 <div align="center">
 
+<br/>
+
 **Dikembangkan oleh Tim IT & Pengembangan Web — Arkan Intermedia**  
 Didistribusikan di bawah lisensi **MIT License**.
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:10B981,50:065F46,100:0F172A&height=100&section=footer" width="100%" alt="Footer Wave" />
 
 </div>
