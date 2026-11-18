@@ -1,7 +1,0 @@
-╔════════════════════════════════════════════════════════════════╗
-║  AUDIT: BLOCKS WITH IMAGE — SMKMUH1 Blora                      ║
-║  Generated: Sat Oct  3 04:41:48 PM WIB 2026                       ║
-╚════════════════════════════════════════════════════════════════╝
-
-/tmp/audit-image-blocks.sh: line 26: 0
-0: syntax error in expression (error token is "0")

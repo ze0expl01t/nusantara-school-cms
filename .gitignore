@@ -120,3 +120,4 @@ Thumbs.db
 .vscode/
 \n\n# Temïporary Scripts\naudit-project.php\nrollback_*.sh\n/storage/app/analytics/*.json
 /storage/app/audits/*
+/storage/audit/*
