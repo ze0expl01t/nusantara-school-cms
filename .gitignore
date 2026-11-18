@@ -118,4 +118,5 @@ public/hot
 Thumbs.db
 .idea/
 .vscode/
-\n\n# Temïporary Scripts\naudit-project.php\nrollback_*.sh\n
+\n\n# Temïporary Scripts\naudit-project.php\nrollback_*.sh\n/storage/app/analytics/*.json
+/storage/app/audits/*
