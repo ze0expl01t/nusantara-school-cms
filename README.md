@@ -344,6 +344,6 @@ Didistribusikan di bawah lisensi **MIT License**.
 </div>
 <div align="center">
   <a href="https://saweria.co/arkanintermedia">
-      <img width="1024" height="254" alt="image" src="https://github.com/user-attachments/assets/1e83252f-20e1-4282-b466-f6ee5cb09148" />
+       <img width="1024" height="254" alt="image" src="https://github.com/user-attachments/assets/a42ace11-601b-4a29-90bc-c12106f2aded" />
   </a>
 </div>
