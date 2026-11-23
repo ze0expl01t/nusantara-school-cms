@@ -35,6 +35,7 @@
 
     $locale = app()->getLocale();
     Carbon::setLocale($locale);
+    $nowWib = Carbon::now('Asia/Jakarta');
 
     $prefetchUrls = $agendas->take(2)->map(function ($agenda) use ($locale) {
         $slug = $agenda->slug
@@ -50,11 +51,15 @@
     @endforeach
 @endpush
 
-<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:700px]" data-block-reveal>
+<section
+    x-data="{ agendaFilter: 'all' }"
+    class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:700px]"
+    data-block-reveal
+>
 
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-emerald-500/10 blur-[80px] rounded-full pointer-events-none [transform:translate3d(-50%,-50%,0)]"></div>
 
-    <div class="relative z-10 space-y-10 sm:space-y-12">
+    <div class="relative z-10 space-y-8 sm:space-y-10">
 
         @if($sectionTitle)
             <div class="flex flex-col items-center text-center space-y-3">
@@ -70,6 +75,34 @@
         @endif
 
         @if($agendas->count() > 0)
+            <!-- Filter Status Agenda: Semua / Mendatang / Selesai -->
+            <div class="flex flex-wrap items-center justify-center gap-2" role="group" aria-label="Filter status agenda">
+                <button
+                    type="button"
+                    @click="agendaFilter = 'all'"
+                    :class="agendaFilter === 'all' ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-emerald-400 hover:text-emerald-700'"
+                    class="px-4 py-1.5 rounded-full text-xs font-bold border transition-colors"
+                >
+                    Semua ({{ $agendas->count() }})
+                </button>
+                <button
+                    type="button"
+                    @click="agendaFilter = 'upcoming'"
+                    :class="agendaFilter === 'upcoming' ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-emerald-400 hover:text-emerald-700'"
+                    class="px-4 py-1.5 rounded-full text-xs font-bold border transition-colors"
+                >
+                    Mendatang
+                </button>
+                <button
+                    type="button"
+                    @click="agendaFilter = 'past'"
+                    :class="agendaFilter === 'past' ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-emerald-400 hover:text-emerald-700'"
+                    class="px-4 py-1.5 rounded-full text-xs font-bold border transition-colors"
+                >
+                    Selesai
+                </button>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 @foreach($agendas as $agenda)
                     @php
@@ -78,6 +111,10 @@
                                 ->locale($locale)
                                 ->timezone('Asia/Jakarta')
                             : null;
+
+                        $isPast = $dateObj ? $dateObj->isPast() : false;
+                        $statusKey = $isPast ? 'past' : 'upcoming';
+                        $statusLabel = $isPast ? 'Selesai' : 'Mendatang';
 
                         $jamLabel = filled($agenda->time_slot ?? null)
                             ? trim((string) $agenda->time_slot)
@@ -112,6 +149,8 @@
                     @endphp
 
                     <article
+                        x-show="agendaFilter === 'all' || agendaFilter === '{{ $statusKey }}'"
+                        x-cloak
                         data-analytics="agenda-click"
                         data-agenda-id="{{ $agenda->id }}"
                         data-agenda-title="{{ $agenda->title }}"
@@ -147,8 +186,8 @@
                                     </div>
                                 @endif
 
-                                <span class="px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-bold text-slate-600 uppercase tracking-wider shrink-0">
-                                    Agenda
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shrink-0 border {{ $isPast ? 'bg-slate-100 border-slate-200 text-slate-600' : 'bg-emerald-50 border-emerald-200 text-emerald-700' }}">
+                                    {{ $statusLabel }}
                                 </span>
                             </div>
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Twill\NewsletterSubscriberController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,13 +31,17 @@ Route::get('/', [PageDisplayController::class, 'home'])
     ->name('frontend.home');
 
 // =====================================================================
-// FRONTEND MODULE ROUTES (detail only)
+// FRONTEND MODULE ROUTES (detail & calendar export)
 // =====================================================================
 Route::get('/ekstrakurikuler/{slug}', [ExtracurricularFrontendController::class, 'show'])
     ->name('extracurricular.show');
 
 Route::get('/fasilitas/{slug}', [FacilityFrontendController::class, 'show'])
     ->name('facility.show');
+
+Route::get('/agenda/{slug}/ics', [AgendaFrontendController::class, 'downloadIcs'])
+    ->middleware('throttle:agenda-ics')
+    ->name('agenda.ics');
 
 Route::get('/agenda/{slug}', [AgendaFrontendController::class, 'show'])
     ->name('agenda.show');
@@ -69,6 +74,7 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])
 // SEARCH
 // =====================================================================
 Route::get('/search', [SearchController::class, 'index'])
+    ->middleware('throttle:60,1')
     ->name('search');
 
 // =====================================================================
@@ -79,12 +85,15 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
     ->name('newsletter.subscribe');
 
 Route::get('/newsletter/verify/{token}', [NewsletterController::class, 'verify'])
+    ->middleware('throttle:20,1')
     ->name('newsletter.verify');
 
 Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribePage'])
+    ->middleware('throttle:20,1')
     ->name('newsletter.unsubscribe.page');
 
 Route::post('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->middleware('throttle:20,1')
     ->name('newsletter.unsubscribe');
 
 // =====================================================================
@@ -106,7 +115,7 @@ Route::middleware(['web', 'auth:twill_users'])
                     'message' => 'Sitemap berhasil di-generate ulang!',
                 ]);
 
-            } catch (Throwable $e) {
+            } catch (\Throwable $e) {
                 Log::error('Sitemap regenerate failed', [
                     'error' => $e->getMessage(),
                     'user_id' => auth('twill_users')->id(),

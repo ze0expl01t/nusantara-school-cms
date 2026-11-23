@@ -266,6 +266,11 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
+        // Agenda ICS rate limiter
+        RateLimiter::for('agenda-ics', function (Request $request) {
+            return Limit::perMinute(30)->by($request->ip());
+        });
+
         // API rate limiter
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());

@@ -242,7 +242,7 @@
     // ===== FLAG: admin request =====
     $adminPath = trim(config('twill.admin_app_path', 'admin'), '/');
     $isAdminRequest = request()->is($adminPath) || request()->is($adminPath . '/*')
-        || request()->is('admin*') || request()->is('twill*');
+        || request()->is('admin*') || request()->is('twill*') || request()->is('panel-maintenance*');
 
     // ===== SEO =====
     $pageTitle  = trim($__env->yieldContent('meta_title'));
@@ -257,7 +257,7 @@
     {{-- viewport-fit=cover untuk iPhone notch / Dynamic Island --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="{{ $isAdminRequest ? 'noindex, nofollow' : 'index, follow' }}">
 
     {{-- color-scheme: cegah flash warna saat dark-mode OS --}}
     <meta name="color-scheme" content="light">
@@ -373,6 +373,30 @@
          preload LCP image) dari block TIDAK akan muncul.
          ═══════════════════════════════════════════════════════════════ --}}
     @stack('head')
+@php
+    $schoolSchema = [
+        "@context" => "https://schema.org",
+        "@type" => "School",
+        "name" => $siteTitle,
+        "description" => $metaDescription,
+        "url" => url("/"),
+    ];
+    if (!empty($contactPhone)) {
+        $schoolSchema["telephone"] = $contactPhone;
+    }
+    if (!empty($contactEmail)) {
+        $schoolSchema["email"] = $contactEmail;
+    }
+    if (!empty($contactAddress)) {
+        $schoolSchema["address"] = [
+            "@type" => "PostalAddress",
+            "streetAddress" => $contactAddress,
+        ];
+    }
+@endphp
+@if(!$isAdminRequest)
+    <script type="application/ld+json">{!! json_encode($schoolSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+@endif
 </head>
 <body
     class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-600 selection:text-white flex flex-col min-h-screen [text-rendering:optimizeLegibility]"
