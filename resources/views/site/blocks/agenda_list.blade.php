@@ -13,22 +13,29 @@
         return $value ?: $default;
     };
 
+    $sanitizeHttpUrl = function ($url) {
+        if (empty($url) || !is_string($url)) {
+            return null;
+        }
+        $trimmed = trim($url);
+        if (!preg_match('#^https?://#i', $trimmed)) {
+            return null;
+        }
+        return filter_var($trimmed, FILTER_VALIDATE_URL) ? $trimmed : null;
+    };
+
     $sectionTitle = $safeInput($block, 'title', 'Agenda Kegiatan');
     $limit = (int) $safeInput($block, 'limit', 6);
 
-    // Eager load slugs → hindari N+1 query
     $agendas = Agenda::where('published', true)
         ->with(['slugs'])
         ->orderBy('agenda_date', 'asc')
         ->take($limit)
         ->get();
 
-    // Set locale Carbon untuk translatedFormat
     $locale = app()->getLocale();
     Carbon::setLocale($locale);
 
-    // ═══ Prefetch URL agenda terdekat via browser resource hints ═══
-    // Ambil 1-2 URL pertama untuk di-prefetch (bukan via JS fetch)
     $prefetchUrls = $agendas->take(2)->map(function ($agenda) use ($locale) {
         $slug = $agenda->slug
             ?? optional($agenda->slugs->where('locale', $locale)->first())->slug
@@ -37,7 +44,6 @@
     })->filter()->values();
 @endphp
 
-{{-- ═══ Resource hints: prefetch agenda terdekat (better than JS fetch) ═══ --}}
 @push('head')
     @foreach($prefetchUrls as $url)
         <link rel="prefetch" href="{{ $url }}">
@@ -46,12 +52,10 @@
 
 <section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:700px]" data-block-reveal>
 
-    <!-- Efek Ambient Glow — kurangi blur radius untuk hemat GPU paint -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-emerald-500/10 blur-[80px] rounded-full pointer-events-none [transform:translate3d(-50%,-50%,0)]"></div>
 
     <div class="relative z-10 space-y-10 sm:space-y-12">
 
-        <!-- Judul Section Modern -->
         @if($sectionTitle)
             <div class="flex flex-col items-center text-center space-y-3">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-semibold text-slate-600">
@@ -65,7 +69,6 @@
             </div>
         @endif
 
-        <!-- Grid List Agenda Modern -->
         @if($agendas->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 @foreach($agendas as $agenda)
@@ -76,48 +79,70 @@
                                 ->timezone('Asia/Jakarta')
                             : null;
 
-                        // Handle slug: akses accessor atau relasi slugs
+                        $jamLabel = filled($agenda->time_slot ?? null)
+                            ? trim((string) $agenda->time_slot)
+                            : ($dateObj ? $dateObj->format('H:i') . ' WIB' : null);
+
+                        $tempatLabel = filled($agenda->venue ?? null)
+                            ? trim((string) $agenda->venue)
+                            : (filled($agenda->location ?? null) ? trim((string) $agenda->location) : null);
+
+                        $penyelenggaraLabel = filled($agenda->organizer ?? null)
+                            ? trim((string) $agenda->organizer)
+                            : null;
+
+                        $pesertaLabel = filled($agenda->participants ?? null)
+                            ? trim((string) $agenda->participants)
+                            : null;
+
+                        $safeExternalUrl = $sanitizeHttpUrl($agenda->external_url ?? null);
+
                         $slugValue = $agenda->slug
                             ?? optional($agenda->slugs->where('locale', $locale)->first())->slug
                             ?? optional($agenda->slugs->first())->slug;
                         $agendaUrl = $slugValue ? url('/agenda/' . $slugValue) : '#';
 
-                        // Excerpt deskripsi — bersihkan HTML + limit
-                        $excerpt = $agenda->description
-                            ? Str::limit(trim(strip_tags($agenda->description)), 160)
+                        $cleanDescription = $agenda->description
+                            ? preg_replace("/\n{3,}/", "\n\n", trim(strip_tags(str_replace(['<br>', '<br/>', '<br />', '</p>'], ["\n", "\n", "\n", "\n\n"], $agenda->description))))
+                            : null;
+
+                        $excerpt = $cleanDescription
+                            ? Str::limit($cleanDescription, 160)
                             : null;
                     @endphp
 
-                    <!-- Kartu Agenda Dibungkus Tautan Single View -->
-                    <a
-                        href="{{ $agendaUrl }}"
+                    <article
                         data-analytics="agenda-click"
                         data-agenda-id="{{ $agenda->id }}"
                         data-agenda-title="{{ $agenda->title }}"
-                        aria-label="Lihat detail agenda: {{ $agenda->title }}"
-                        class="bg-white border border-slate-200 hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-600/10 rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition-all duration-300 group flex flex-col justify-between space-y-5 sm:space-y-6 hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0 [contain:layout_style] [transform:translateZ(0)]"
+                        class="bg-white border border-slate-200 hover:border-emerald-500 hover:shadow-xl hover:shadow-emerald-600/10 rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition-all duration-300 group flex flex-col justify-between space-y-5 sm:space-y-6 hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 [contain:layout_style] [transform:translateZ(0)]"
                     >
 
                         <div class="space-y-4">
-                            <!-- Header Kartu: Tanggal & Waktu -->
                             <div class="flex items-start justify-between gap-3">
-                                @if($dateObj)
+                                @if($dateObj || $jamLabel)
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 group-hover:border-emerald-300 group-hover:bg-emerald-100 flex flex-col items-center justify-center text-emerald-600 shrink-0 transition-all duration-300 shadow-sm">
-                                            <span class="text-[10px] font-bold leading-none uppercase tracking-wider">
-                                                {{ $dateObj->translatedFormat('M') }}
-                                            </span>
-                                            <span class="text-base font-black leading-tight">
-                                                {{ $dateObj->format('d') }}
-                                            </span>
-                                        </div>
+                                        @if($dateObj)
+                                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 group-hover:border-emerald-300 group-hover:bg-emerald-100 flex flex-col items-center justify-center text-emerald-600 shrink-0 transition-all duration-300 shadow-sm">
+                                                <span class="text-[10px] font-bold leading-none uppercase tracking-wider">
+                                                    {{ $dateObj->translatedFormat('M') }}
+                                                </span>
+                                                <span class="text-base font-black leading-tight">
+                                                    {{ $dateObj->format('d') }}
+                                                </span>
+                                            </div>
+                                        @endif
                                         <div>
-                                            <span class="text-xs font-semibold text-slate-500 block">
-                                                {{ $dateObj->translatedFormat('l') }}
-                                            </span>
-                                            <span class="text-xs font-bold text-emerald-600">
-                                                {{ $dateObj->format('H:i') }} WIB
-                                            </span>
+                                            @if($dateObj)
+                                                <span class="text-xs font-semibold text-slate-500 block">
+                                                    {{ $dateObj->translatedFormat('l') }}
+                                                </span>
+                                            @endif
+                                            @if($jamLabel)
+                                                <span class="text-xs font-bold text-emerald-600 block">
+                                                    {{ $jamLabel }}
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 @endif
@@ -127,39 +152,69 @@
                                 </span>
                             </div>
 
-                            <!-- Judul Agenda -->
                             <h3 class="text-base sm:text-lg md:text-xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors duration-300 leading-snug line-clamp-2">
-                                {{ $agenda->title }}
+                                <a href="{{ $agendaUrl }}" class="focus:outline-none focus-visible:underline">
+                                    {{ $agenda->title }}
+                                </a>
                             </h3>
 
-                            <!-- Lokasi -->
-                            @if($agenda->location)
-                                <div class="flex items-center gap-2 text-slate-600 text-xs bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
-                                    <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    <span class="truncate">{{ $agenda->location }}</span>
+                            @if($tempatLabel || $penyelenggaraLabel || $pesertaLabel)
+                                <div class="space-y-1.5 text-xs text-slate-600 bg-slate-50 px-3 py-2.5 rounded-xl border border-slate-100">
+                                    @if($tempatLabel)
+                                        <div class="flex items-start gap-2">
+                                            <span class="font-semibold text-slate-700 shrink-0">Tempat:</span>
+                                            <span class="line-clamp-1">{{ $tempatLabel }}</span>
+                                        </div>
+                                    @endif
+                                    @if($penyelenggaraLabel)
+                                        <div class="flex items-start gap-2">
+                                            <span class="font-semibold text-slate-700 shrink-0">Penyelenggara:</span>
+                                            <span class="line-clamp-1">{{ $penyelenggaraLabel }}</span>
+                                        </div>
+                                    @endif
+                                    @if($pesertaLabel)
+                                        <div class="flex items-start gap-2">
+                                            <span class="font-semibold text-slate-700 shrink-0">Peserta:</span>
+                                            <span class="line-clamp-1">{{ $pesertaLabel }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             @endif
 
-                            <!-- Deskripsi Singkat -->
                             @if($excerpt)
-                                <p class="text-slate-600 text-sm line-clamp-3 leading-relaxed">
+                                <p class="text-slate-600 text-sm line-clamp-3 leading-relaxed whitespace-pre-line">
                                     {{ $excerpt }}
                                 </p>
                             @endif
                         </div>
 
-                        <!-- Footer Kartu -->
-                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500 group-hover:text-emerald-600 transition-colors">
-                            <span>Detail Kegiatan</span>
-                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 text-xs font-semibold">
+                            @if($safeExternalUrl)
+                                <a
+                                    href="{{ $safeExternalUrl }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-emerald-600 hover:text-emerald-700 underline underline-offset-4 truncate"
+                                >
+                                    Tautan / URL
+                                </a>
+                            @else
+                                <span class="text-slate-400">Agenda</span>
+                            @endif
+
+                            <a
+                                href="{{ $agendaUrl }}"
+                                aria-label="Lihat detail agenda: {{ $agenda->title }}"
+                                class="inline-flex items-center gap-1.5 text-slate-600 group-hover:text-emerald-600 transition-colors shrink-0"
+                            >
+                                <span>Detail Kegiatan</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
                         </div>
 
-                    </a>
+                    </article>
                 @endforeach
             </div>
         @else

@@ -29,7 +29,6 @@ class AgendaController extends BaseModuleController
     {
         $form = parent::getForm($model);
 
-        // Judul Agenda (Translatable / Multibahasa)
         $form->add(
             Input::make()
                 ->name('title')
@@ -37,7 +36,6 @@ class AgendaController extends BaseModuleController
                 ->translatable()
         );
 
-        // Tanggal & Waktu Acara
         $form->add(
             DatePicker::make()
                 ->name('agenda_date')
@@ -46,14 +44,47 @@ class AgendaController extends BaseModuleController
                 ->withoutTime(false)
         );
 
-        // Lokasi Acara
+        $form->add(
+            Input::make()
+                ->name('time_slot')
+                ->label('Jam')
+                ->placeholder('Contoh: 14:00 - 16:00 WIB')
+        );
+
         $form->add(
             Input::make()
                 ->name('location')
                 ->label('Lokasi Acara')
         );
 
-        // Deskripsi Agenda menggunakan Editor Wysiwyg (Quill)
+        $form->add(
+            Input::make()
+                ->name('venue')
+                ->label('Tempat')
+                ->placeholder('Contoh: CADL, ITB Kampus Ganesha')
+        );
+
+        $form->add(
+            Input::make()
+                ->name('organizer')
+                ->label('Penyelenggara')
+                ->placeholder('Contoh: Museum ITB')
+        );
+
+        $form->add(
+            Input::make()
+                ->name('participants')
+                ->label('Peserta')
+                ->placeholder('Contoh: Umum peserta')
+        );
+
+        $form->add(
+            Input::make()
+                ->name('external_url')
+                ->label('URL')
+                ->placeholder('https://...')
+        );
+
         $form->add(
             Wysiwyg::make()
                 ->name('description')
@@ -63,7 +94,6 @@ class AgendaController extends BaseModuleController
                 ->translatable()
         );
 
-        // ===== SEO FIELDS =====
         $form->add(
             Input::make()
                 ->name('meta_title')
@@ -103,8 +133,20 @@ class AgendaController extends BaseModuleController
 
         $table->add(
             Text::make()
-                ->field('location')
-                ->title('Lokasi')
+                ->field('time_slot')
+                ->title('Jam')
+        );
+
+        $table->add(
+            Text::make()
+                ->field('venue')
+                ->title('Tempat')
+        );
+
+        $table->add(
+            Text::make()
+                ->field('organizer')
+                ->title('Penyelenggara')
         );
 
         return $table;

@@ -23,7 +23,12 @@ class Agenda extends Model implements Sortable
         'title',
         'description',
         'agenda_date',
+        'time_slot',
         'location',
+        'venue',
+        'organizer',
+        'participants',
+        'external_url',
         'position',
     ];
 
