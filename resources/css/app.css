@@ -34,6 +34,18 @@ body {
         linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
 }
 
+/* ===== Animation: scroll reveal perlahan per blok ===== */
+[data-block-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-block-reveal].is-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
 /* ===== Animation: border glow ===== */
 @keyframes borderGlow {
     0%   { background-position: 0% 50%; }
@@ -63,6 +75,12 @@ body {
 
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
+    [data-block-reveal],
+    [data-block-reveal].is-revealed {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
     .loading-bar-animation,
     .animate-glow {
         animation: none !important;

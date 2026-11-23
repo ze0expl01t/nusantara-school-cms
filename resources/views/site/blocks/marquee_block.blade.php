@@ -14,7 +14,7 @@
     $totalItems = $items ? $items->count() : 0;
 @endphp
 
-<section class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden [content-visibility:auto] [contain-intrinsic-size:150px]">
+<section class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden [content-visibility:auto] [contain-intrinsic-size:150px]" data-block-reveal>
     <div class="space-y-5 sm:space-y-6">
 
         {{-- Judul Section --}}

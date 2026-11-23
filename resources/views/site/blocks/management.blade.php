@@ -19,7 +19,7 @@
         ->get();
 @endphp
 
-<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto [content-visibility:auto] [contain-intrinsic-size:700px]">
+<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto [content-visibility:auto] [contain-intrinsic-size:700px]" data-block-reveal>
     <div class="space-y-8 sm:space-y-10">
 
         {{-- Header Section --}}

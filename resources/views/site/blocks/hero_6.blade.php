@@ -39,7 +39,7 @@
         . '[&_hr]:my-4 [&_hr]:border-slate-200';
 @endphp
 
-<section class="relative py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+<section class="relative py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden" data-block-reveal>
 
     {{-- Efek Ambient Glow Halus di Belakang --}}
     <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 bg-emerald-500/10 blur-[100px] rounded-full pointer-events-none"></div>

@@ -16,7 +16,7 @@
     $items = $block->children;
 @endphp
 
-<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto [content-visibility:auto] [contain-intrinsic-size:800px]">
+<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto [content-visibility:auto] [contain-intrinsic-size:800px]" data-block-reveal>
 
     <div class="space-y-10 sm:space-y-12">
 

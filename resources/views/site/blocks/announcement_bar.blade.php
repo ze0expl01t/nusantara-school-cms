@@ -27,7 +27,7 @@
 </style>
 
 {{-- Posisi: top-20 (di bawah header), z-40 (di bawah menu dropdown) --}}
-<div class="sticky top-20 z-40 w-full shadow-sm {{ $bgClass }} overflow-hidden border-b border-black/10 block m-0 p-0 leading-none">
+<div class="sticky top-20 z-40 w-full shadow-sm {{ $bgClass }} overflow-hidden border-b border-black/10 block m-0 p-0 leading-none" data-block-reveal>
     <div class="flex items-center px-4 py-2 sm:px-6 m-0">
 
         {{-- DYNAMIC ICON --}}

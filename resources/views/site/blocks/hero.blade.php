@@ -73,7 +73,7 @@
     @endpush
 @endif
 
-<section class="relative min-h-[70vh] sm:min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-12 sm:py-16 [contain:layout_style]">
+<section class="relative min-h-[70vh] sm:min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-12 sm:py-16 [contain:layout_style]" data-block-reveal>
 
     {{-- Background Layer --}}
     <div class="absolute inset-0 z-0">

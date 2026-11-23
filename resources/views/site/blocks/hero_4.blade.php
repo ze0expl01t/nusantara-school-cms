@@ -44,7 +44,7 @@
     @endpush
 @endif
 
-<section class="relative py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+<section class="relative py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden" data-block-reveal>
 
     {{-- Efek Ambient Glow — blur dikurangi untuk hemat GPU paint --}}
     <div class="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-emerald-500/10 blur-[60px] rounded-full pointer-events-none [transform:translate3d(0,-50%,0)]" aria-hidden="true"></div>

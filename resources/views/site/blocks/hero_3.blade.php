@@ -21,7 +21,7 @@
 <section
     @if($anchorId) id="{{ $anchorId }}" @endif
     class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center space-y-4 sm:space-y-5 scroll-mt-24 [contain:layout_style]"
->
+ data-block-reveal>
 
     {{-- Subtitle / Badge --}}
     @if($subtitle)

@@ -21,7 +21,7 @@
     $totalPages = $pages->count();
 @endphp
 
-<section class="py-8 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 [content-visibility:auto] [contain-intrinsic-size:700px]">
+<section class="py-8 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 [content-visibility:auto] [contain-intrinsic-size:700px]" data-block-reveal>
 
     <div
         x-data="{

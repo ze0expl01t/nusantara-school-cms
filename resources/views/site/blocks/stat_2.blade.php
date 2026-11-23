@@ -32,7 +32,7 @@
     $pageTitle = trim(strip_tags($titleMain . ' ' . $titleHighlight)) ?: 'Galeri';
 @endphp
 
-<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden [content-visibility:auto] [contain-intrinsic-size:800px]">
+<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden [content-visibility:auto] [contain-intrinsic-size:800px]" data-block-reveal>
     <div class="space-y-6">
 
         <div class="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-10 shadow-sm relative overflow-hidden [contain:layout_style]">

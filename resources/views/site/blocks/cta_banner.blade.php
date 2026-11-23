@@ -148,7 +148,7 @@
     };
 @endphp
 
-<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden">
+<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative overflow-hidden" data-block-reveal>
 
     <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/20 {{ $s['bg'] }} {{ $innerPadding }}">
 
