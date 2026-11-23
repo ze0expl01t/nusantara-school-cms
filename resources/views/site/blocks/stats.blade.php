@@ -13,9 +13,10 @@
     $titleHighlight = $safeInput($block, 'title_highlight', '& Mutu Pendidikan');
 
     $stats = $block->children;
+    $counterUid = 'ns_stats_' . ($block->id ?? uniqid());
 @endphp
 
-<section class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto [content-visibility:auto] [contain-intrinsic-size:400px]" data-block-reveal>
+<section id="{{ $counterUid }}" class="py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" data-block-reveal>
     <div class="space-y-6 sm:space-y-8">
 
         <div class="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-sm relative overflow-hidden [contain:layout_style]">
@@ -41,15 +42,32 @@
                                 $number = $safeInput($stat, 'number');
                                 $suffix = $safeInput($stat, 'suffix');
                                 $label  = $safeInput($stat, 'label');
+
+                                $cleanNum = is_string($number) || is_numeric($number)
+                                    ? preg_replace('/[^0-9.]/', '', (string) $number)
+                                    : '';
+                                $isNumericTarget = $cleanNum !== '' && is_numeric($cleanNum);
+                                $decimals = ($isNumericTarget && str_contains($cleanNum, '.'))
+                                    ? strlen(explode('.', $cleanNum)[1])
+                                    : 0;
+                                $initialDisplay = $isNumericTarget
+                                    ? number_format(0, $decimals, '.', '')
+                                    : (string) $number;
                             @endphp
 
                             <div class="flex flex-col items-center justify-center text-center group cursor-default px-2 sm:px-4">
                                 <div class="flex items-baseline gap-1 transform transition-transform duration-300 group-hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 [transform:translateZ(0)]">
 
-                                    @if($number)
-                                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-600 drop-shadow-sm tabular-nums leading-none">
-                                            {{ $number }}
-                                        </span>
+                                    @if($number !== null && $number !== '')
+                                        <span
+                                            class="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-600 drop-shadow-sm tabular-nums leading-none"
+                                            @if($isNumericTarget)
+                                                data-ns-countup
+                                                data-target="{{ $cleanNum }}"
+                                                data-decimals="{{ $decimals }}"
+                                                data-raw="{{ $number }}"
+                                            @endif
+                                        >{{ $initialDisplay }}</span>
                                     @endif
 
                                     @if($suffix)
@@ -81,3 +99,91 @@
         </div>
     </div>
 </section>
+
+<script>
+(function () {
+    const sectionEl = document.getElementById(@json($counterUid));
+    if (!sectionEl) return;
+
+    const counters = Array.from(sectionEl.querySelectorAll('[data-ns-countup]'));
+    if (!counters.length) return;
+
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const formatNumber = (val, decimals) => {
+        if (decimals > 0) {
+            return Number(val).toFixed(decimals);
+        }
+        return String(Math.round(val));
+    };
+
+    const runCounters = () => {
+        if (sectionEl.dataset.nsCountupStarted === '1') return;
+        sectionEl.dataset.nsCountupStarted = '1';
+
+        counters.forEach((el) => {
+            const target = parseFloat(el.dataset.target || '0');
+            const decimals = parseInt(el.dataset.decimals || '0', 10) || 0;
+            const raw = el.dataset.raw || String(target);
+
+            if (!Number.isFinite(target)) {
+                el.textContent = raw;
+                return;
+            }
+
+            if (prefersReducedMotion || target === 0) {
+                el.textContent = decimals > 0 ? target.toFixed(decimals) : raw;
+                return;
+            }
+
+            const duration = 1200;
+            const startTime = performance.now();
+
+            const step = (now) => {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = target * eased;
+
+                el.textContent = progress < 1
+                    ? formatNumber(current, decimals)
+                    : (decimals > 0 ? target.toFixed(decimals) : raw);
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+
+            requestAnimationFrame(step);
+        });
+    };
+
+    if (!('IntersectionObserver' in window) || prefersReducedMotion) {
+        runCounters();
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight) {
+                    runCounters();
+                    observer.disconnect();
+                }
+            });
+        },
+        { threshold: 0.05 }
+    );
+
+    observer.observe(sectionEl);
+
+    window.addEventListener('scroll', () => {
+        if (sectionEl.dataset.nsCountupStarted === '1') return;
+        const rect = sectionEl.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+            runCounters();
+            observer.disconnect();
+        }
+    }, { passive: true });
+})();
+</script>
