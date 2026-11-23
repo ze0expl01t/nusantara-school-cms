@@ -30,7 +30,7 @@
   <a href="#konfigurasi">Konfigurasi</a> •
   <a href="#reset-password">Reset Password</a> •
   <a href="#production-deploy">Production Deploy</a> •
-  <a href="#troubleshooting">Troubleshooting</a>
+  <a href="#troubleshooting">Troubleshooting</a> •
   <a href="https://smkmuh1blora.sch.id">Live Version</a>
 </p>
 
