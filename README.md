@@ -137,18 +137,23 @@ APP_ENV=local
 APP_KEY=
 APP_DEBUG=true
 APP_URL=[http://127.0.0.1:8000](http://127.0.0.1:8000)
-ADMIN_APP_PATH=panel-maintenance
+ADMIN_APP_PATH=backend
+
+# LOCALE & BAHASA
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_EN
 
 # DATABASE
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=nusantara_school
-DB_USERNAME=root
+DB_DATABASE=
+DB_USERNAME=
 DB_PASSWORD=
 
 # REDIS & SESSION (Gunakan DB index berbeda jika 1 server berbagi banyak project)
-SESSION_DRIVER=redis
+SESSION_DRIVER=
 SESSION_DOMAIN=
 SESSION_SECURE_COOKIE=false
 
@@ -159,9 +164,9 @@ REDIS_DB=2
 REDIS_CACHE_DB=3
 
 # QUEUE & HORIZON
-QUEUE_CONNECTION=redis
-HORIZON_PATH=horizon
-HORIZON_PREFIX=nusantara_school_horizon:
+QUEUE_CONNECTION=
+HORIZON_PATH=
+HORIZON_PREFIX=
 
 # GOOGLE ANALYTICS 4 (Opsional)
 ANALYTICS_PROPERTY_ID=
@@ -325,16 +330,6 @@ nusantara-school-cms/
 
 ---
 
-## <img src="https://api.iconify.design/heroicons/tag-solid.svg?color=%2310b981&width=22&height=22" width="22" height="22" align="absmiddle" /> Release Notes (`v1.0.0`)
-
-- **Standardisasi Modul Jurusan:** Migrasi menyeluruh istilah *"divisi"* menjadi *"jurusan"* di seluruh tampilan (`jurusan-list.blade.php`, `jurusan-detail.blade.php`), Twill repeaters, blok kontak, serta rute (`/jurusan` & `/jurusan/{slug}`).
-- **Clean Migration & Live Seeder:** Pemisahan penuh 47 tabel modul custom dari migrasi vendor Twill CMS (`2026_11_16_000001_create_nusantara_tables.php`) + `LiveDatabaseSeeder`.
-- **CLI Auto-Installer (`setup.php`):** Otomatisasi instalasi satu perintah setelah `git clone`.
-- **GA4 Event Tracking & Brosur Fix:** Perbaikan resolusi file `fileObject('download_file')` dan pelacakan klik unduhan otomatis.
-- **Smart Backup & Security Scan:** Kompresi arsip ringan tanpa `vendor`/`node_modules` serta pemindaian keamanan terjadwal via Symfony Process.
-
----
-
 <div align="center">
 
 <br/>
@@ -348,3 +343,9 @@ Didistribusikan di bawah lisensi **MIT License**.
        <img width="1024" height="254" alt="image" src="https://github.com/user-attachments/assets/a42ace11-601b-4a29-90bc-c12106f2aded" />
   </a>
 </div>
+
+<img width="1274" height="641" alt="image" src="https://github.com/user-attachments/assets/a34e29f9-6ae6-4411-9fc1-276905794fc0" />
+<img width="1273" height="640" alt="image" src="https://github.com/user-attachments/assets/3dd19498-1543-4eea-bb67-9f8f064afe4b" />
+<img width="1274" height="638" alt="image" src="https://github.com/user-attachments/assets/ac40513e-bf23-4023-91f0-ea35b4174849" />
+
+
